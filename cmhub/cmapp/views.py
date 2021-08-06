@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import UserRegisterForm, EditProfileForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 
 def index(request):
@@ -39,3 +40,9 @@ def edit_profile(request):
         form = EditProfileForm(instance=request.user)
         args = {'form': form}
         return render(request, 'cmapp/edit_profile.html', args)
+
+def delete_user(request,pk):
+    user = User.objects.filter(username=pk)
+    user.delete()
+    return redirect('index')
+
