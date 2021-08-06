@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'cmapp',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -127,6 +128,8 @@ STATIC_URL = '/static/'
 INTERNAL_IPS = ['127.0.0.1']
 
 LOGIN_REDIRECT_URL = 'index'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_URL = 'login'
 

@@ -9,4 +9,5 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('login/', auth_view.LoginView.as_view(template_name='cmapp/login.html'), name="login"),
     path('logout/', auth_view.LogoutView.as_view(template_name='cmapp/logout.html'), name="logout"),
+    path('edit_profile/', views.edit_profile,name='edit_profile'),
 ]

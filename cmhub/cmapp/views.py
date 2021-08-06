@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm, EditProfileForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
@@ -27,3 +27,15 @@ def register(request):
 @login_required()
 def profile(request):
     return render(request, 'cmapp/profile.html')
+
+def edit_profile(request):
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form = EditProfileForm(instance=request.user)
+        args = {'form': form}
+        return render(request, 'cmapp/edit_profile.html', args)
