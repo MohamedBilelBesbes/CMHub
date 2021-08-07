@@ -1,0 +1,31 @@
+<div class="container">
+  <h2>{{post.numberoffollowers}}</h2>
+  <h2>{{post.numberoffollowing}}</h2>
+  <h2>{{post.numberoftweets}}</h2>
+  <h2>{{post.content}}</h2>
+  <h2>{{post.picture}}</h2>
+  <h2>{{post.video}}</h2>
+  <h2>{{post.owner}}</h2>
+</div>
+<div>
+  <a
+    href="{% url 'edit_post' idpost=post.pk %}"
+    class="btn"
+    style="color: white; background-color: #fd5e14"
+    type="submit"
+    id="header-links"
+  >
+    Edit Post
+  </a>
+</div>
+<div>
+  <a
+    href="{% url 'delete_post' pk=post.pk %}"
+    class="btn"
+    style="color: white; background-color: #fd5e14"
+    type="submit"
+    id="header-links"
+  >
+    Delete Post
+  </a>
+</div>

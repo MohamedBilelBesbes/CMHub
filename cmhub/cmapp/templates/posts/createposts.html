@@ -1,0 +1,45 @@
+{% extends 'cmapp/base.html' %} {% block content %}
+<form
+  class="form-inline"
+  action="{% url 'create_post' owner=user.pk %}"
+  method="post"
+>
+  {% csrf_token %}
+  <div class="form-group">
+    <label class="control-label">Numberoffollowers</label>
+    <input type="text" name="numberoffollowers" id="numberoffollowers" />
+  </div>
+  <div class="form-group">
+    <label class="control-label">Numberoffollowing</label>
+    <input type="text" name="numberoffollowing" id="numberoffollowing" />
+  </div>
+  <div class="form-group">
+    <label class="control-label">Numberoftweets</label>
+    <input type="text" name="numberoftweets" id="numberoftweets" />
+  </div>
+  <div class="form-group">
+    <label class="control-label">Content</label>
+    <input type="text" name="content" id="content" />
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">video</label>
+    <select name="video" id="video">
+      <option>--Please choose an option--</option>
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label class="control-label">picture</label>
+    <select name="picture" id="picture">
+      <option>--Please choose an option--</option>
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
+  </div>
+
+  <button type="submit" class="btn btn-success">Create post</button>
+</form>
+
+{% endblock %}

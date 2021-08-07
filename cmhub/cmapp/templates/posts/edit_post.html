@@ -1,0 +1,62 @@
+{% extends 'cmapp/base.html' %} {% block content %}
+<form
+  class="form-inline"
+  action="{% url 'edit_post' idpost=post.pk %}"
+  method="post"
+>
+  {% csrf_token %}
+  <div class="form-group">
+    <label class="control-label">Numberoffollowers</label>
+    <input
+      type="text"
+      name="numberoffollowers"
+      value="{{post.numberoffollowers}}"
+      id="numberoffollowers"
+    />
+  </div>
+  <div class="form-group">
+    <label class="control-label">Numberoffollowing</label>
+    <input
+      type="text"
+      value="{{post.numberoffollowing}}"
+      name="numberoffollowing"
+      id="numberoffollowing"
+    />
+  </div>
+  <div class="form-group">
+    <label class="control-label">Numberoftweets</label>
+    <input
+      type="text"
+      value="{{post.numberoftweets}}"
+      name="numberoftweets"
+      id="numberoftweets"
+    />
+  </div>
+  <div class="form-group">
+    <label class="control-label">Content</label>
+    <input type="text" value="{{post.content}}" name="content" id="content" />
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">video</label>
+    <select name="video" id="video">
+      <option value="{{video}}">{{video}}</option>
+      <option>--Please choose an option--</option>
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label class="control-label">picture</label>
+    <select name="picture" id="picture">
+      <option value="{{picture}}">{{picture}}</option>
+      <option>--Please choose an option--</option>
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
+  </div>
+
+  <button type="submit" class="btn btn-success">edit post</button>
+</form>
+
+{% endblock %}
