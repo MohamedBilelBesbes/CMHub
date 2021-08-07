@@ -5,6 +5,15 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Post
+import pickle
+from googletrans import Translator
+import pandas as pd
+from sklearn.preprocessing import OrdinalEncoder
+from sklearn.preprocessing import StandardScaler
+from xgboost import XGBRegressor
+import xgboost as xgb
+from sklearn.decomposition import PCA
+import joblib
 
 #Users
 def index(request):
@@ -143,5 +152,53 @@ def edit_post(request,idpost):
 @login_required()
 def display_post(request, pk):
         post = Post.objects.get(pk=pk)
-        args = {'post': post}
+        numberoffollowers = post.numberoffollowers
+        numberoffollowing = post.numberoffollowing
+        numberoftweets = post.numberoftweets
+        picture = post.picture
+        video = post.video
+        content = post.content
+        if picture == False:
+            picture = 0
+        elif picture == True :
+            picture= 1
+        if video == False:
+            video = 0
+        elif video == True :
+            video= 1
+        numberOfHashtags = content.count('#')
+        numberOfTags = content.count('@')
+        numberOfURLs = content.count('http')
+        with open('.//cmapp//pickles//Encoder.pkl', 'rb') as pkl:
+            encoder2 = pickle.load(pkl)
+        encoder = joblib.load('.//cmapp//pickles//Encoder.pkl', 'rb')
+        retweet_model = xgb.Booster()
+        retweet_model.load_model(".//cmapp//pickles//retweetmodel.bin")
+        with open('.//cmapp//pickles//Scaler.pkl', 'rb') as pkl:
+            scaler = pickle.load(pkl)
+        with open('.//cmapp//pickles//pcapurl.pkl', 'rb') as pkl:
+            pcapurl = pickle.load(pkl)
+        with open('.//cmapp//pickles//pcavtag.pkl', 'rb') as pkl:
+            pcavtag = pickle.load(pkl)
+        translator = Translator()
+        language = 'unknown'
+        try:
+            language = translator.detect(post.content).lang
+        except:
+            pass
+        language = pd.DataFrame(data={'language' : language}, index=['language'])
+        language = encoder.transform(language)
+        data = {'NumberofTweets':[numberoftweets for i in range(4)], 'NumberofFollowing':[numberoffollowing for i in range(4)], 'NumberofFollowers':[numberoffollowers for i in range(4)],'Picture':[picture for i in range(4)],'Video':[video for i in range(4)], 'numberOfHashtags':[numberOfHashtags for i in range(4)], 'numberOfTags':[numberOfTags for i in range(4)], 'numberOfURLs':[numberOfURLs for i in range(4)],'tweetage':[i for i in range(1,5)],'language':[language for i in range(4)]}
+        df = pd.DataFrame(data)
+        df[['NumberofTweets', 'NumberofFollowing', 'NumberofFollowers', 'numberOfHashtags', 'numberOfTags', 'numberOfURLs','tweetage','language']] = scaler.transform(df[['NumberofTweets', 'NumberofFollowing', 'NumberofFollowers', 'numberOfHashtags', 'numberOfTags', 'numberOfURLs','tweetage','language']])
+        picurls = df[['Picture' , 'numberOfURLs']]
+        videotags = df[['Video' , 'numberOfTags']]
+        videotags = pcavtag.transform(videotags)
+        picurls = pcapurl.transform(picurls)
+        df['VideoNTags'] = videotags.reshape(1,-1)[0]
+        df['PictureNURL'] = picurls.reshape(1,-1)[0]
+        df = df.drop(columns=['Video' , 'numberOfTags' , 'Picture' , 'numberOfURLs'])
+        y_pr = pd.Series(retweet_model.predict(df)).apply(lambda x : 10**x) - 1
+        y = sorted(y_pr.tolist())
+        args = {'post':post,'y':y}
         return render(request, 'posts/display_post.html', args)
