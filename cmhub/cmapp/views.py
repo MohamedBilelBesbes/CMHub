@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from .forms import UserRegisterForm, EditProfileForm
+from .forms import UserRegisterForm, EditProfileForm, d
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -174,6 +174,8 @@ def display_post(request, pk):
         encoder = joblib.load('.//cmapp//pickles//Encoder.pkl', 'rb')
         retweet_model = xgb.Booster()
         retweet_model.load_model(".//cmapp//pickles//retweetmodel.bin")
+        like_model = xgb.Booster()
+        like_model.load_model(".//cmapp//pickles//likemodel.bin")
         with open('.//cmapp//pickles//Scaler.pkl', 'rb') as pkl:
             scaler = pickle.load(pkl)
         with open('.//cmapp//pickles//pcapurl.pkl', 'rb') as pkl:
@@ -186,10 +188,15 @@ def display_post(request, pk):
             language = translator.detect(post.content).lang
         except:
             pass
-        language = pd.DataFrame(data={'language' : language}, index=['language'])
-        language = encoder.transform(language)
+        language = d[language]
+        #language = pd.DataFrame(data={'language' : language}, index=['language'])
+        #language['language'].iloc[0]
+        #language = encoder.transform(language)
         data = {'NumberofTweets':[numberoftweets for i in range(4)], 'NumberofFollowing':[numberoffollowing for i in range(4)], 'NumberofFollowers':[numberoffollowers for i in range(4)],'Picture':[picture for i in range(4)],'Video':[video for i in range(4)], 'numberOfHashtags':[numberOfHashtags for i in range(4)], 'numberOfTags':[numberOfTags for i in range(4)], 'numberOfURLs':[numberOfURLs for i in range(4)],'tweetage':[i for i in range(1,5)],'language':[language for i in range(4)]}
         df = pd.DataFrame(data)
+        print('---------------')
+        print(df.head(5))
+        print('---------------')
         df[['NumberofTweets', 'NumberofFollowing', 'NumberofFollowers', 'numberOfHashtags', 'numberOfTags', 'numberOfURLs','tweetage','language']] = scaler.transform(df[['NumberofTweets', 'NumberofFollowing', 'NumberofFollowers', 'numberOfHashtags', 'numberOfTags', 'numberOfURLs','tweetage','language']])
         picurls = df[['Picture' , 'numberOfURLs']]
         videotags = df[['Video' , 'numberOfTags']]
@@ -198,7 +205,11 @@ def display_post(request, pk):
         df['VideoNTags'] = videotags.reshape(1,-1)[0]
         df['PictureNURL'] = picurls.reshape(1,-1)[0]
         df = df.drop(columns=['Video' , 'numberOfTags' , 'Picture' , 'numberOfURLs'])
-        y_pr = pd.Series(retweet_model.predict(df)).apply(lambda x : 10**x) - 1
-        y = sorted(y_pr.tolist())
-        args = {'post':post,'y':y}
+        y_pretweet = pd.Series(retweet_model.predict(xgb.DMatrix(df.values))).apply(lambda x : 10**x) - 1
+        y_pretweet = y_pretweet.round().astype('int64')
+        y_retweet = sorted(y_pretweet.tolist())
+        y_prlike = pd.Series(like_model.predict(xgb.DMatrix(df.values))).apply(lambda x : 10**x) - 1
+        y_prlike = y_prlike.round().astype('int64')
+        y_like = sorted(y_prlike.tolist())
+        args = {'post':post,'y_retweet':y_retweet, 'y_like':y_like}
         return render(request, 'posts/display_post.html', args)
