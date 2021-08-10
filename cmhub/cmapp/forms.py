@@ -9,6 +9,8 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+        widgets = {forms.PasswordInput(attrs={'class': 'form-control', 'style':'background-color: #d0d4f5 !important;width: 40%;','placeholder':'Confirm Password ...'}),
+        }
 
 
 class EditProfileForm(UserChangeForm):

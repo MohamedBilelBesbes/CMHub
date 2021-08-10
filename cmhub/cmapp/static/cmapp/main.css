@@ -179,7 +179,9 @@
   font-size:12px;
   }
   .login-form .group .button{
-  background:#ff8248;
+  color: white;
+  margin-left: 10px;
+  background-color: rgb(29,161,242);
   }
   .login-form .group label .icon{
   width:15px;
@@ -211,9 +213,6 @@
   }
   .login-form .group .check:checked + label{
   color:#fff;
-  }
-  .login-form .group .check:checked + label .icon{
-  background:#ff8248;
   }
   .login-form .group .check:checked + label .icon:before{
   transform:scale(1) rotate(45deg);
@@ -373,3 +372,4 @@
     text-decoration: none;
     border-radius: 9px;
   }
+

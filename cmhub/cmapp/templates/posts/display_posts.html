@@ -1,24 +1,51 @@
-{% for post in posts %}
-<div class="container">
-  <h2>{{post.numberoffollowers}}</h2>
-  <h2>{{post.numberoffollowing}}</h2>
-  <h2>{{post.numberoftweets}}</h2>
-  <h2>{{post.content}}</h2>
-  <h2>{{post.picture}}</h2>
-  <h2>{{post.video}}</h2>
-  <h2>{{post.owner}}</h2>
+{% extends 'cmapp/base.html' %} {% load crispy_forms_tags %} {% load static %}
+{% block content %}
+<div class="row" style="background-color:white;margin:80px;border-radius: 30px;">
+  <div class="row" style="margin-top:50px;margin-bottom:80px;margin-left:2px;">
+    {% for post in posts %}
+    <div class="col-md-4" style="margin-top:20px;margin-bottom:20px;">
+      <div class="card card-chart" style="border-radius: 30px;">
+        <div class="card-header" style="border-radius: 40px;">Post ID : {{post.pk}}, Made By {{post.owner}}</div>
+        <div class="card-body">
+          <h5 class="card-title">Info about the corresponding account</h5>
+          <p class="card-category">
+            Number Of Followers: {{post.numberoffollowers}}
+          </p>
+          <p class="card-category">
+            Number Of Following: {{post.numberoffollowing}}
+          </p>
+          <p class="card-category">
+            Number Of Tweets: {{post.numberoftweets}}
+          </p>
+          <h5 class="card-title">Info about the post</h5>
+          <p class="card-category">
+            Post has picture ? {{post.picture}}
+          </p>
+          <p class="card-category">
+            Post has video ? {{post.video}}
+          </p>
+          <p class="card-category">
+            Content of post : {{post.content}}
+          </p>
+          <div class="d-flex justify-content-between align-items-center">
+            <a
+              href="{% url 'display_post' pk=post.pk %}"
+              class="btn"
+              style="color: white;margin-left: 10px;background-color: rgb(29,161,242);"
+              type="submit"
+              id="header-links"
+            >
+              Display Post
+            </a>
+          </div>
+        </div>
+        <div class="card-footer" style="border-radius: 30px;">
+          <div class="stats"> posted on {{ post.created_at }}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
 </div>
-
-<div>
-  <a
-    href="{% url 'display_post' pk=post.pk %}"
-    class="btn"
-    style="color: white; background-color: #fd5e14"
-    type="submit"
-    id="header-links"
-  >
-    Display Post
-  </a>
-</div>
-
-{% endfor %}
+  {% endblock %}

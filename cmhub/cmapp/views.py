@@ -25,7 +25,7 @@ def register(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
-            messages.success(request, f'Hi {username}, your account was created successfully')
+            messages.success(request, f'{username}, your account was created successfully, you just need to login')
             return redirect('index')
     else:
         form = UserRegisterForm()
@@ -35,7 +35,9 @@ def register(request):
 
 @login_required()
 def profile(request):
-    return render(request, 'cmapp/profile.html')
+    posts = Post.objects.filter(owner=request.user.username)
+    args = {'posts':posts}
+    return render(request, 'cmapp/profile.html', args)
 @login_required()
 def edit_profile(request):
     if request.method == 'POST':
@@ -176,6 +178,10 @@ def display_post(request, pk):
         retweet_model.load_model(".//cmapp//pickles//retweetmodel.bin")
         like_model = xgb.Booster()
         like_model.load_model(".//cmapp//pickles//likemodel.bin")
+        comment_model = xgb.Booster()
+        comment_model.load_model(".//cmapp//pickles//commentsmodel.bin")
+        with open('.//cmapp//pickles//commentscaler.pkl', 'rb') as pkl:
+            commentscaler = pickle.load(pkl)
         with open('.//cmapp//pickles//Scaler.pkl', 'rb') as pkl:
             scaler = pickle.load(pkl)
         with open('.//cmapp//pickles//pcapurl.pkl', 'rb') as pkl:
@@ -194,6 +200,7 @@ def display_post(request, pk):
         #language = encoder.transform(language)
         data = {'NumberofTweets':[numberoftweets for i in range(4)], 'NumberofFollowing':[numberoffollowing for i in range(4)], 'NumberofFollowers':[numberoffollowers for i in range(4)],'Picture':[picture for i in range(4)],'Video':[video for i in range(4)], 'numberOfHashtags':[numberOfHashtags for i in range(4)], 'numberOfTags':[numberOfTags for i in range(4)], 'numberOfURLs':[numberOfURLs for i in range(4)],'tweetage':[i for i in range(1,5)],'language':[language for i in range(4)]}
         df = pd.DataFrame(data)
+        df1= df.copy()
         print('---------------')
         print(df.head(5))
         print('---------------')
@@ -208,8 +215,17 @@ def display_post(request, pk):
         y_pretweet = pd.Series(retweet_model.predict(xgb.DMatrix(df.values))).apply(lambda x : 10**x) - 1
         y_pretweet = y_pretweet.round().astype('int64')
         y_retweet = sorted(y_pretweet.tolist())
+        y_retweet = [max(0,y_retweet[i]) for i in range(len(y_retweet))]
         y_prlike = pd.Series(like_model.predict(xgb.DMatrix(df.values))).apply(lambda x : 10**x) - 1
         y_prlike = y_prlike.round().astype('int64')
         y_like = sorted(y_prlike.tolist())
-        args = {'post':post,'y_retweet':y_retweet, 'y_like':y_like}
+        y_like = [max(0,y_like[i]) for i in range(len(y_like))]
+        df1 =df1[['NumberofTweets', 'NumberofFollowing', 'NumberofFollowers', 'tweetage', 'numberOfHashtags']]
+        print(df1.head(3))
+        df1[['NumberofTweets', 'NumberofFollowing', 'NumberofFollowers', 'numberOfHashtags',  'tweetage']] = commentscaler.transform(df1[['NumberofTweets', 'NumberofFollowing', 'NumberofFollowers', 'numberOfHashtags',  'tweetage']])
+        y_prcomments = pd.Series(comment_model.predict(xgb.DMatrix(df1.values))).apply(lambda x : x / 10)
+        y_prcomments =  y_prcomments.round().astype('int64')
+        y_prcomments = sorted( y_prcomments.tolist())
+        y_prcomments = [max(0,y_prcomments[i]) for i in range(len(y_prcomments))]
+        args = {'post':post,'y_retweet':y_retweet, 'y_like':y_like, 'y_comment':y_prcomments}
         return render(request, 'posts/display_post.html', args)

@@ -1,6 +1,13 @@
-{% extends 'cmapp/base.html' %} {% block content %}
+{% extends 'cmapp/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+<br>
+<div style="margin-left: 30px;">
+<table>
 <form
-  class="form-inline"
+  class="form"
   action="{% url 'edit_post' idpost=post.pk %}"
   method="post"
 >
@@ -12,34 +19,41 @@
       name="numberoffollowers"
       value="{{post.numberoffollowers}}"
       id="numberoffollowers"
+      class="form-control"
+      style="background-color: #d0d4f5 !important;width: 40%;margin-left:50px;"
     />
   </div>
   <div class="form-group">
     <label class="control-label">Numberoffollowing</label>
     <input
+    class="form-control" 
       type="text"
       value="{{post.numberoffollowing}}"
       name="numberoffollowing"
       id="numberoffollowing"
+      style="background-color: #d0d4f5 !important;width: 40%;margin-left:50px;"
     />
   </div>
   <div class="form-group">
     <label class="control-label">Numberoftweets</label>
     <input
+    class="form-control" 
       type="text"
       value="{{post.numberoftweets}}"
       name="numberoftweets"
       id="numberoftweets"
+      style="background-color: #d0d4f5 !important;width: 40%;margin-left:50px;"
     />
   </div>
   <div class="form-group">
     <label class="control-label">Content</label>
-    <input type="text" value="{{post.content}}" name="content" id="content" />
+    <input type="text" class="form-control" style="background-color: #d0d4f5 !important;width: 40%;margin-left:50px;" value="{{post.content}}" name="content" id="content" />
   </div>
 
   <div class="form-group">
     <label class="control-label">video</label>
-    <select name="video" id="video">
+    <br>
+    <select name="video" style="background-color: #d0d4f5 !important;width: 40%;margin-left:50px;" id="video">
       <option value="{{video}}">{{video}}</option>
       <option>--Please choose an option--</option>
       <option value="yes">Yes</option>
@@ -48,15 +62,18 @@
   </div>
   <div class="form-group">
     <label class="control-label">picture</label>
-    <select name="picture" id="picture">
+    <br>
+    <select name="picture" style="background-color: #d0d4f5 !important;width: 40%;margin-left:50px;" id="picture">
       <option value="{{picture}}">{{picture}}</option>
       <option>--Please choose an option--</option>
       <option value="yes">Yes</option>
       <option value="no">No</option>
     </select>
   </div>
-
-  <button type="submit" class="btn btn-success">edit post</button>
+  <br>
+  <button type="submit" style="margin-left: 400px;" class="btn btn-primary">edit post</button>
 </form>
-
+</table>
+</div>
+<br>
 {% endblock %}

@@ -9,7 +9,7 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('profile/', views.profile, name='profile'),
     path('login/', auth_view.LoginView.as_view(template_name='cmapp/login.html'), name="login"),
-    path('logout/', auth_view.LogoutView.as_view(template_name='cmapp/logout.html'), name="logout"),
+    path('logout/', auth_view.LogoutView.as_view(template_name='cmapp/index.html'), name="logout"),
     path('edit_profile/', views.edit_profile,name='edit_profile'),
     url(r'^delete_user/(?P<pk>.*)', views.delete_user, name='delete_user'),
     url(r'create_post/(?P<owner>.*)', views.create_post,name='create_post'),

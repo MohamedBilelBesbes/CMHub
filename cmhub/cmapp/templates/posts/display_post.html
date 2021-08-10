@@ -1,35 +1,119 @@
-<div class="container">
-  <h2>{{post.numberoffollowers}}</h2>
-  <h2>{{post.numberoffollowing}}</h2>
-  <h2>{{post.numberoftweets}}</h2>
-  <h2>{{post.content}}</h2>
-  <h2>{{post.picture}}</h2>
-  <h2>{{post.video}}</h2>
-  <h2>{{post.owner}}</h2>
-</div>
-<div>
-  <a
-    href="{% url 'edit_post' idpost=post.pk %}"
-    class="btn"
-    style="color: white; background-color: #fd5e14"
-    type="submit"
-    id="header-links"
-  >
-    Edit Post
-  </a>
-</div>
-<div>
-  <a
-    href="{% url 'delete_post' pk=post.pk %}"
-    class="btn"
-    style="color: white; background-color: #fd5e14"
-    type="submit"
-    id="header-links"
-  >
-    Delete Post
-  </a>
-</div>
+{% extends 'cmapp/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
 
-{{y_retweet}}
-<br>
-{{y_like}}
+{% block content %}
+  <div class="row">
+    <div class="col-6">
+    <div class="col-md-12" style="margin-top:20px;margin-bottom:20px;">
+      <div class="card card-chart" style="border-radius: 30px;">
+        <div class="card-header" style="border-radius: 40px;">Post ID : {{post.pk}}, Made By {{post.owner}}</div>
+        <div class="card-body">
+          <h5 class="card-title">Info about the corresponding account</h5>
+          <p class="card-category">
+            Number Of Followers: {{post.numberoffollowers}}
+          </p>
+          <p class="card-category">
+            Number Of Following: {{post.numberoffollowing}}
+          </p>
+          <p class="card-category">
+            Number Of Tweets: {{post.numberoftweets}}
+          </p>
+          <h5 class="card-title">Info about the post</h5>
+          <p class="card-category">
+            Post has picture ? {{post.picture}}
+          </p>
+          <p class="card-category">
+            Post has video ? {{post.video}}
+          </p>
+          <p class="card-category">
+            Content of post : {{post.content}}
+          </p>
+          <div class="row">
+          <div class="col-md-4">
+          <div class="d-flex justify-content-between align-items-center">
+            <a
+              href="{% url 'display_post' pk=post.pk %}"
+              class="btn"
+              style="color: white;margin-left: 10px;background-color: rgb(29,161,242);"
+              type="submit"
+              id="header-links"
+            >
+              Redisplay Post
+            </a>
+          </div>
+          </div>
+          <div class="col-md-4">
+          <div class="d-flex justify-content-between align-items-center">
+            <a
+              href="{% url 'edit_post' idpost=post.pk %}"
+              class="btn"
+              style="color: white;margin-left: 10px;background-color: rgb(29,161,242);"
+              type="submit"
+              id="header-links"
+            >
+              Edit Post
+            </a>
+          </div>
+          </div>
+          <div class="col-md-4">
+          <div class="d-flex justify-content-between align-items-center">
+            <a
+              href="{% url 'delete_post' pk=post.pk %}"
+              class="btn"
+              style="color: white;margin-left: 10px;background-color: rgb(29,161,242);"
+              type="submit"
+              id="header-links"
+            >
+              Delete Post
+            </a>
+          </div>
+          </div>
+        </div>
+        </div>
+        <div class="card-footer" style="border-radius: 30px;">
+          <div class="stats"> posted on {{ post.created_at }}
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="col-4">
+    <br>
+    <br>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">react index/period</th>
+      <th scope="col">first hour</th>
+      <th scope="col">hour 1 - hour 12</th>
+      <th scope="col">hour 12 - hour 24</th>
+      <th scope="col">1 day or more</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">number of likes</th>
+      {% for i in y_like %}
+      <td>{{i}}</td>
+      {% endfor %}
+    </tr>
+    <tr>
+      <th scope="row">number of retweets</th>
+      {% for i in y_retweet %}
+      <td>{{i}}</td>
+      {% endfor %}
+    </tr>
+    <tr>
+      <th scope="row">number of comments</th>
+      {% for i in y_comment %}
+      <td>{{i}}</td>
+      {% endfor %}
+    </tr>
+    <tr>
+  </tbody>
+</table>
+    </div>
+    </div>
+
+{% endblock %}
