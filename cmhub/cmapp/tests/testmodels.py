@@ -5,6 +5,13 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from  cmapp.models import Post
 from django.contrib.auth.models import User
+from selenium import webdriver as wb
+import time
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
+from django.test import LiveServerTestCase
+
+
 
 class TestModels(TestCase):
     def SetUp(self):
@@ -91,3 +98,17 @@ class TestModels(TestCase):
         Post.objects.filter(pk=testpost_id).delete()
         self.assertEquals(Post.objects.all().filter(pk=testpost_id).count(), 0)
         print('deleting post works !')
+class FrontTest(LiveServerTestCase):
+    def testform(self):
+        driver =wb.Chrome()
+        driver.get('http://127.0.0.1:8000/login')
+        time.sleep(5)
+        username = driver.find_element_by_id('username')
+        password = driver.find_element_by_id('password')
+        time.sleep(5)
+        login = driver.find_element_by_id('signin-links')
+        username.send_keys('chaimabeldi')
+        password.send_keys('123456')
+        login.send_keys(Keys.RETURN)
+        assert 'chaimabeldi' in driver.page_source
+        
