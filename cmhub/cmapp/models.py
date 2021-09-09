@@ -12,4 +12,4 @@ class Post(models.Model):
     video = models.BooleanField(default=False)
     owner = models.CharField(max_length=200)
     def __str__(self):
-        return self.contacted
+        return self.owner
