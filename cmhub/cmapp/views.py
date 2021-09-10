@@ -89,7 +89,7 @@ def create_post(request, owner):
               owner = Owner,
 
             )
-        return redirect('index')
+        return redirect('display_posts')
 
     return render(request, 'posts/createposts.html')
 @login_required()

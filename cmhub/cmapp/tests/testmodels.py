@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UsernameField
 from django.db.models.fields import EmailField
-from django.http import response
+from django.http import request, response
 from django.test import TestCase, Client
 from django.urls import reverse
 from  cmapp.models import Post
@@ -10,7 +10,6 @@ import time
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from django.test import LiveServerTestCase
-
 
 
 class TestModels(TestCase):
@@ -99,7 +98,20 @@ class TestModels(TestCase):
         self.assertEquals(Post.objects.all().filter(pk=testpost_id).count(), 0)
         print('deleting post works !')
 class FrontTest(LiveServerTestCase):
-    def testform(self):
+    # def testform(self):
+    #     driver =wb.Chrome()
+    #     driver.get('http://127.0.0.1:8000/login')
+    #     time.sleep(5)
+    #     username = driver.find_element_by_id('username')
+    #     password = driver.find_element_by_id('password')
+    #     time.sleep(5)
+    #     login = driver.find_element_by_id('signin-links')
+    #     username.send_keys('chaimabeldi')
+    #     password.send_keys('123456')
+    #     login.send_keys(Keys.RETURN)
+    #     assert 'chaimabeldi' in driver.page_source
+    def testPost(self):
+        
         driver =wb.Chrome()
         driver.get('http://127.0.0.1:8000/login')
         time.sleep(5)
@@ -110,5 +122,36 @@ class FrontTest(LiveServerTestCase):
         username.send_keys('chaimabeldi')
         password.send_keys('123456')
         login.send_keys(Keys.RETURN)
-        assert 'chaimabeldi' in driver.page_source
+        time.sleep(2)
+        
+        driver.find_element_by_xpath('/html/body/nav/div/ul/li[3]/a').click()
+
+        time.sleep(3)
+        numberofpredpost = Post.objects.all().count()
+        print (numberofpredpost)
+        Numberoffollowers = driver.find_element_by_id('numberoffollowers')
+        Numberoffollowing = driver.find_element_by_id('numberoffollowing')
+        Numberoftweets = driver.find_element_by_id('numberoftweets')
+        Content = driver.find_element_by_id('content')
+        video = driver.find_element_by_id('video')
+        picture = driver.find_element_by_id('picture')
+        time.sleep(5)
+        # createpost = driver.find_element_by_id('createpost')
+        Numberoffollowers.send_keys('58')
+        Numberoffollowing.send_keys('12')
+        Numberoftweets.send_keys('33')
+        Content.send_keys('cg')
+        video.send_keys('yes')
+        picture.send_keys('no')
+        time.sleep(5)
+        driver.find_element_by_xpath('/html/body/div[2]/div/div[1]/form/button').click()
+        # createpost.send_keys(Keys.RETURN)
+        time.sleep(20)
+        numberofafterpost = Post.objects.all().count()
+        print (numberofafterpost)
+        # self.assertEquals(numberofpredpost + 1,numberofafterpost )
+        # url = request.get(driver.current_url)
+        # assert url.status_code == 302
+        response = self.client.get(driver.current_url)
+        self.assertEqual(response.status_code, 302)
         

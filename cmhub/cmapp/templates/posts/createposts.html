@@ -1,66 +1,99 @@
-{% extends 'cmapp/base.html' %}
-{% load crispy_forms_tags %}
-{% load static %}
-
+{% extends 'cmapp/base.html' %} {% load crispy_forms_tags %} {% load static %}
 {% block content %}
-<link rel="stylesheet" href="{% static 'cmapp/styling.css' %}">
-<div class="container" style="margin-top: 30px;">
+<link rel="stylesheet" href="{% static 'cmapp/styling.css' %}" />
+<div class="container" style="margin-top: 30px">
   <div class="row">
     <div class="col-8">
-<form
-  action="{% url 'create_post' owner=user.pk %}"
-  method="post"
->
-  {% csrf_token %}
-  <div class="form-group">
-    <label class="control-label">Numberoffollowers</label>
-    <br>
-    <input type="text" class="form-control styleofinput" placeholder="Number of followers ....." name="numberoffollowers" id="numberoffollowers" />
+      <form action="{% url 'create_post' owner=user.pk %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <label class="control-label">Numberoffollowers</label>
+          <br />
+          <input
+            type="text"
+            class="form-control styleofinput"
+            placeholder="Number of followers ....."
+            name="numberoffollowers"
+            id="numberoffollowers"
+          />
+        </div>
+        <br />
+        <div class="form-group">
+          <label class="control-label">Numberoffollowing</label>
+          <input
+            type="text"
+            class="form-control styleofinput"
+            placeholder="Number of following ....."
+            name="numberoffollowing"
+            id="numberoffollowing"
+          />
+        </div>
+        <br />
+        <div class="form-group">
+          <label class="control-label">Numberoftweets</label>
+          <input
+            type="text"
+            class="form-control styleofinput"
+            placeholder="Number of tweets ....."
+            name="numberoftweets"
+            id="numberoftweets"
+          />
+        </div>
+        <br />
+        <div class="form-group">
+          <label class="control-label">Content</label>
+          <input
+            type="text"
+            class="form-control styleofinput"
+            placeholder="Content ....."
+            name="content"
+            id="content"
+          />
+        </div>
+        <br />
+        <div class="form-group">
+          <label class="control-label">video</label>
+          <br />
+          <select name="video" class="styleofinput" id="video">
+            <option>--Please choose an option--</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+        <br />
+        <div class="form-group">
+          <label class="control-label">picture</label>
+          <br />
+          <select name="picture" class="styleofinput" id="picture">
+            <option>--Please choose an option--</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+        <br />
+        <button
+          type="submit"
+          class="btn"
+          id="createpost"
+          style="
+            color: white;
+            margin-left: 10px;
+            background-color: rgb(29, 161, 242);
+          "
+        >
+          Create post
+        </button>
+      </form>
+    </div>
+    <div class="col-4">
+      <br />
+      <br />
+      <img
+        src="http://127.0.0.1:8000/media/twitterimage.png"
+        class="img-thumbnail"
+        alt="Twitter image"
+      />
+    </div>
   </div>
-  <br>
-  <div class="form-group">
-    <label class="control-label">Numberoffollowing</label>
-    <input type="text" class="form-control styleofinput" placeholder="Number of following ....." name="numberoffollowing" id="numberoffollowing" />
-  </div>
-  <br>
-  <div class="form-group">
-    <label class="control-label">Numberoftweets</label>
-    <input type="text" class="form-control styleofinput" placeholder="Number of tweets ....." name="numberoftweets" id="numberoftweets" />
-  </div>
-  <br> 
-  <div class="form-group">
-    <label class="control-label">Content</label>
-    <input type="text" class="form-control styleofinput" placeholder="Content ....." name="content" id="content" />
-  </div>
-  <br>
-  <div class="form-group">
-    <label class="control-label">video</label>
-    <br>
-    <select name="video" class="styleofinput" id="video">
-      <option>--Please choose an option--</option>
-      <option value="yes">Yes</option>
-      <option value="no">No</option>
-    </select>
-  </div>
-  <br>
-  <div class="form-group">
-    <label class="control-label">picture</label>
-    <br>
-    <select name="picture" class="styleofinput" id="picture">
-      <option>--Please choose an option--</option>
-      <option value="yes">Yes</option>
-      <option value="no">No</option>
-    </select>
-  </div>
-  <br>
-  <button type="submit" class="btn" style="color: white;margin-left: 10px;background-color: rgb(29,161,242);">Create post</button>
-</form>
-</div>
-<div class="col-4">
-<br>
-<br>
-<img src="http://127.0.0.1:8000/media/twitterimage.png" class="img-thumbnail" alt="Twitter image">
-</div>
-</div>
 </div>
 {% endblock %}
