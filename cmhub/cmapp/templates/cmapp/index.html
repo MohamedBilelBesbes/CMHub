@@ -1,25 +1,103 @@
-{% extends 'cmapp/base.html' %}
-{% load crispy_forms_tags %}
-{% load static %}
-
+{% extends 'cmapp/base.html' %} {% load crispy_forms_tags %} {% load static %}
 {% block content %}
-<h1>contenu</h1>
+<div class="row">
+  <div class="col-12">
+    <h1 style="text-align: center; margin: 25px">Community Management Hub</h1>
+  </div>
+</div>
+<div class="row">
+  <div style="padding: 0px">
+    <img
+      src="http://127.0.0.1:8000/media/management.jpg"
+      class="img"
+      alt="Responsive image"
+      style="padding: 0px; margin: 0px; width: 100%; opacity: 0.6"
+    />
+  </div>
+</div>
+<div class="row">
+  <div style="padding: 0px; margin-top: 25px; margin-bottom: 25px">
+    <h4 style="text-align: center">
+      This project is a collaboration between Mohamed Bilel Besbes and Chaima
+      Beldi. It is a platform for twitter community managers to collaborate and
+      make predictions on their projects
+      aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+      aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+      aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+      aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    </h4>
+  </div>
+</div>
+<div class="row">
+   <div class="col-12">
+    <h2 style="text-align: start; margin: 20px">Conversation</h2>
+  </div>
+</div>
+<div class="row" style="text-align: center; justify-content: center;">
+    <div class="col-md-3" style="margin: 20px;">
+      <div class="card card-chart" style="border-radius: 30px;">
+        <div class="card-header" style="text-align:center;border-radius: 40px;"><img src="http://127.0.0.1:8000/media/coeur.png" alt="no image"></div>
+        <div class="card-body">
+          <h5 class="card-title" style="text-align: center;">Likes</h5>
+          
+          <p class="card-category" style="width: 260;height: 220;">
+            Likes are a great way to show you appreciate or support a Tweet. 
+            Tweets you liked are listed on the likes tab of your profile.
+            They can also appear in the feeds of some subscribers.
+          </p> 
+        </div>
+       
+      </div>
+    </div>
+    <div class="col-md-3" style="margin: 20px;">
+      <div class="card card-chart" style="border-radius: 30px;">
+        <div class="card-header" style="text-align:center;border-radius: 40px;"><img src="http://127.0.0.1:8000/media/retweet.png" alt="no image"></div>
+        <div class="card-body" >
+          <h5 class="card-title" style="text-align: center;">Retweets</h5>
+          
+          <p class="card-category" style="width: 260;height: 220;">
+          Retweets allow you to share Tweets that you think will interest 
+          your audience.They are also great for sharing user-generated content.
+          Use the Quote Tweet option to add a touch of humor, amplify a reaction,
+          </p>   
+        </div>
+       
+      </div>
+    </div>
+    <div class="col-md-3" style="margin: 20px;">
+      <div class="card card-chart" style="border-radius: 30px;">
+        <div class="card-header" style="text-align:center;border-radius: 40px;"><img src="http://127.0.0.1:8000/media/comment.png" alt="no image"></div>
+        <div class="card-body" style="justify-content: center;">
+          <h5 class="card-title" style="text-align: center;">Comments</h5>
+          
+          <p class="card-category" style="text-align:center;width: 260;height: 220;">
+            Comments to a Tweet are a very useful way to have personal conversations
+            with your customers. They can also help create a buzz. An effective response
+            is likely to generate many qualified engagements and subscribers.
+          </p>
+        </div>
+       
+      </div>
+    </div>
+</div>
+<div class="row" style="margin: 30;"> 
+    <h3 style="color: 1da1f2;">Advice</h3>
+    <h2>Engage your audience on Twitter</h2>
+</div>
+<div class="row" style="justify-content: center;margin: 30px;">
+<div class="col-md-4" style="margin: 30;margin-bottom: 50;">
+<img style="margin-bottom:50;" src="http://127.0.0.1:8000/media/pub.png" alt="no image">
+</div>
+<div class="col-md-4" style="margin: 30;">
+<p>To build your community on Twitter, it helps to identify and encourage connection opportunities.
+ <br>Here are some suggestions: <br>
+Ask questions or use the Twitter Questions feature to start the conversation.
+When it makes sense, use GIFs, emojis, memes, or Tweets that contain only text to humanize communication and encourage interactions.
 <br>
-<h1>contenu</h1>
-<br>
-<h1>contenu</h1>
-<br>
-<h1>contenu</h1>
-<br>
-<h1>contenu</h1>
-<br>
-<h1>contenu</h1>
-<br>
-<h1>contenu</h1>
-<br>
-<h1>contenu</h1>
-<br>
-<h1>contenu</h1>
-<br>
-
-{% endblock %}
+If you want your readers to take a specific action, say so (example: “Retweet if you can't wait for our new product!”). 
+Stay on top of trends and opportunities to participate in conversations.
+Use Twitter chats to regularly interact with a group on a given topic.</p>
+</div>
+</div>
+  {% endblock %}
+</div>
