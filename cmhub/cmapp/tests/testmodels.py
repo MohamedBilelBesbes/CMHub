@@ -111,11 +111,12 @@ class FrontTest(LiveServerTestCase):
     #     login.send_keys(Keys.RETURN)
     #     assert 'chaimabeldi' in driver.page_source
     def testPost(self):
-        
+        options = Options()
+        options.add_argument("--headless")
         try:
-            driver =wb.Chrome('./chromedriver')
+            driver =wb.Chrome('./chromedriver',options=options)
         except:
-            driver =wb.Chrome('/home/bilel/Desktop/cmhubproject/CMHub/chromedriver')
+            driver =wb.Chrome('/home/bilel/Desktop/cmhubproject/CMHub/chromedriver',options=options)
         driver.get('http://127.0.0.1:8000/login')
         time.sleep(2)
         username = driver.find_element_by_id('username')
