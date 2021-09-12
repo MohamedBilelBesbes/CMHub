@@ -112,7 +112,10 @@ class FrontTest(LiveServerTestCase):
     #     assert 'chaimabeldi' in driver.page_source
     def testPost(self):
         
-        driver =wb.Chrome()
+        try:
+            driver =wb.Chrome('./chromedriver')
+        except:
+            driver =wb.Chrome()
         driver.get('http://127.0.0.1:8000/login')
         time.sleep(5)
         username = driver.find_element_by_id('username')
