@@ -171,22 +171,22 @@ def display_post(request, pk):
         numberOfHashtags = content.count('#')
         numberOfTags = content.count('@')
         numberOfURLs = content.count('http')
-        with open('.//cmapp//pickles//Encoder.pkl', 'rb') as pkl:
+        with open('.//cmhub//cmapp//pickles//Encoder.pkl', 'rb') as pkl:
             encoder2 = pickle.load(pkl)
-        encoder = joblib.load('.//cmapp//pickles//Encoder.pkl', 'rb')
+        encoder = joblib.load('.//cmhub//cmapp//pickles//Encoder.pkl', 'rb')
         retweet_model = xgb.Booster()
-        retweet_model.load_model(".//cmapp//pickles//retweetmodel.bin")
+        retweet_model.load_model(".//cmhub//cmapp//pickles//retweetmodel.bin")
         like_model = xgb.Booster()
-        like_model.load_model(".//cmapp//pickles//likemodel.bin")
+        like_model.load_model(".//cmhub//cmapp//pickles//likemodel.bin")
         comment_model = xgb.Booster()
-        comment_model.load_model(".//cmapp//pickles//commentsmodel.bin")
-        with open('.//cmapp//pickles//commentscaler.pkl', 'rb') as pkl:
+        comment_model.load_model(".//cmhub//cmapp//pickles//commentsmodel.bin")
+        with open('.//cmhub//cmapp//pickles//commentscaler.pkl', 'rb') as pkl:
             commentscaler = pickle.load(pkl)
-        with open('.//cmapp//pickles//Scaler.pkl', 'rb') as pkl:
+        with open('.//cmhub//cmapp//pickles//Scaler.pkl', 'rb') as pkl:
             scaler = pickle.load(pkl)
-        with open('.//cmapp//pickles//pcapurl.pkl', 'rb') as pkl:
+        with open('.//cmhub//cmapp//pickles//pcapurl.pkl', 'rb') as pkl:
             pcapurl = pickle.load(pkl)
-        with open('.//cmapp//pickles//pcavtag.pkl', 'rb') as pkl:
+        with open('.//cmhub//cmapp//pickles//pcavtag.pkl', 'rb') as pkl:
             pcavtag = pickle.load(pkl)
         translator = Translator()
         language = 'unknown'
