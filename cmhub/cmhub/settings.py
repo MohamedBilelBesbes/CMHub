@@ -81,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'cmhub',
         'USER': 'postgres',
-        'PASSWORD': '123456',
+        'PASSWORD': 'Bilel1998',
         'HOST': 'localhost',
         'PORT': '5432',
     }
