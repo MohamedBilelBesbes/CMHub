@@ -8,8 +8,6 @@ pipeline {
                 sh 'python3 ./cmhub/manage.py test cmapp'
             }
         }
-    
-        }
         stage('SonarQube Analysis') {
             steps {
                 script{
@@ -20,4 +18,6 @@ pipeline {
                 }
             }
         }
+        }
+        
 }
