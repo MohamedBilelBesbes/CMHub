@@ -114,11 +114,8 @@ class FrontTest(LiveServerTestCase):
         options = Options()
         options.add_argument("--headless")
         options.add_argument('window-size=1920x1080')
-        try:
-            driver =wb.Chrome('./cmhub/chromedriver',options=options)
-        except:
-            driver =wb.Chrome('/home/bilel/Desktop/cmhubproject/CMHub/chromedriver',options=options)
-            #driver =wb.Chrome('/home/chaima/Downloads/CMHub/chromedriver',options=options)
+        driver =wb.Chrome('/home/bilel/Desktop/cmhubproject/CMHub/chromedriver',options=options)
+        #driver =wb.Chrome('/home/chaima/Downloads/CMHub/chromedriver',options=options)
         driver.get('http://127.0.0.1:8000/login')
         time.sleep(2)
         username = driver.find_element_by_id('username')
