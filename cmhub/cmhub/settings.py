@@ -82,7 +82,7 @@ DATABASES = {
         'NAME': 'cmhub',
         'USER': 'postgres',
         'PASSWORD': 'Bilel1998',
-        'HOST': 'db',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
