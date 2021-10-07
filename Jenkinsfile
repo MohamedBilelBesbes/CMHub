@@ -7,7 +7,7 @@ pipeline {
         stage('Dockerization') {
             steps {
                 sh 'docker-compose build -t mohamedbilelbesbes/cmhubproject:latest'
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stding'
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 sh 'docker push mohamedbilelbesbes/cmhubproject:latest'
             }
         }
