@@ -1,7 +1,9 @@
 
 pipeline {
     agent any
-
+        environment {
+            DOCKERHUB_CREDENTIALS = credentials('dockerhubtoken')
+        }
         stages {
         stage('Test') {
             steps {
@@ -18,6 +20,25 @@ pipeline {
                 }
             }
         }
+           stage('Build') {
+               steps {
+                   sh 'docker-compose build -t mohamedbilelbesbes/cmhubproject:latest'
+               }
+           }
+           stage('Login') {
+               steps {
+                   sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stding''
+               }
+           }
+           stage('Push') {
+               steps {
+                   sh 'docker push mohamedbilelbesbes/cmhubproject:latest'
+               }
+           }
         }
-        
+        post {
+            always {
+                sh 'docker logout'
+            }
+        }
 }

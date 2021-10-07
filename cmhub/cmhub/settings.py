@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-+_o%22eow6hu8dl_odm(^6e(9#@q-$9_yjb$6)r^=!mx+iy^wq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0','127.0.0.1']
 
 
 # Application definition
@@ -82,7 +82,7 @@ DATABASES = {
         'NAME': 'cmhub',
         'USER': 'postgres',
         'PASSWORD': 'Bilel1998',
-        'HOST': 'localhost',
+        'HOST': 'db',
         'PORT': '5432',
     }
 }
