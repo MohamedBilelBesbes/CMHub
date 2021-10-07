@@ -2,11 +2,6 @@ pipeline {
     agent any
 
         stages {
-        stage('Test') {
-            steps {
-                sh 'python3 ./cmhub/manage.py test cmapp'
-            }
-        }
         stage('SonarQube Analysis') {
             steps {
                 script{
@@ -18,5 +13,9 @@ pipeline {
             }
         }
         }
-        
+        stage('Test') {
+            steps {
+                sh 'python3 ./cmhub/manage.py test cmapp'
+            }
+        }
 }
