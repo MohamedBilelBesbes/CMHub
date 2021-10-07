@@ -1,14 +1,14 @@
 pipeline {
     agent any
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('dockerhubtoken')
+    }
     stages {
-        stage('SonarQube Analysis') {
+        stage('Dockerization') {
             steps {
-                script{
-                    def scannerHome = tool 'sonarqube'
-                    withSonarQubeEnv('sonarqube') {
-                        sh "${scannerHome}/bin/sonar-scanner"
-                    }
-                }
+                sh 'docker-compose build -t mohamedbilelbesbes/cmhubproject:latest'
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stding'
+                sh 'docker push mohamedbilelbesbes/cmhubproject:latest'
             }
         }
         stage('Test') {
