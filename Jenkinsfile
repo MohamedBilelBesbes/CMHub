@@ -6,6 +6,7 @@ pipeline {
     stages {
         stage('Test') {
             steps {
+                sh 'pwd'
                 sh 'python3 ./cmhub/manage.py test cmapp'
             }
         }
